@@ -89,4 +89,9 @@
     <color name="red">#F44336</color>
     <color name="red_dark">#C62828</color>
     <color name="red_trans">#99F44336</color>
+
+    <color name="back">#F2F4F7</color>
+
+    <color name="unchecked">#D4D4D4</color>
+
 </resources>

@@ -42,10 +42,11 @@ public class LoginActivity extends RxBaseActivity {
     @Override
     public void initViews(Bundle savedInstanceState) {
         _loginButton.setOnClickListener(view -> login());
-        _signupLink.setOnClickListener(view -> {
+        /*_signupLink.setOnClickListener(view -> {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivityForResult(intent, REQUEST_SIGNUP);
-        });
+        })*/
+        ;
     }
 
     @Override
@@ -69,8 +70,8 @@ public class LoginActivity extends RxBaseActivity {
         String password = _passwordText.getText().toString();
 
         HttpUtils.getInstance()
-                .create(ApiService.class, "http://10.0.0.14:8080/")
-                .test(id, password)
+                .create(ApiService.class, "http://10.0.0.17:8080/")
+                .test()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseBody -> {
@@ -80,6 +81,7 @@ public class LoginActivity extends RxBaseActivity {
                 }, () -> {
                     Log.e(TAG, "获取成功");
                     progressDialog.hide();
+                    _loginButton.setEnabled(true);
                 });
     }
 

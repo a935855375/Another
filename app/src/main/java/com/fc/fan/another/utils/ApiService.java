@@ -21,6 +21,9 @@ public interface ApiService {
     Observable<ResponseBody> post(@Body RequestBody body);
 
     @FormUrlEncoded
-    @POST("/login")
+    @POST("/Fc/login/test2")
     Observable<ResponseBody> test(@Field("username") String username, @Field("password") String password);
+
+    @POST("/Fc/videofile_scanFileByCourse.action")
+    Observable<ResponseBody> test();
 }
