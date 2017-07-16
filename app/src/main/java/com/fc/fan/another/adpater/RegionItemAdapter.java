@@ -64,10 +64,8 @@ public class RegionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         i++;
         switch (position) {
             case 0:
-                Log.e(TAG, "haha" + i);
                 return VIEW_TYPE_HEAD;
             default:
-                Log.e(TAG, "gg" + i);
                 return VIEW_TYPE_CONTENT;
         }
     }

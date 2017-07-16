@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fc.fan.another.R;
+import com.fc.fan.another.module.region.RegionFragment;
 
 /**
  * Created by fan on 7/14/17.
@@ -28,6 +29,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if (position == 1)
+            return RegionFragment.newInstance();
         return TestFragment.newInstance(position + "");
     }
 

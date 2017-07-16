@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+
 import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
 
@@ -29,8 +30,25 @@ public class MainActivity extends RxBaseActivity {
 
     @Override
     public void initViews(Bundle savedInstanceState) {
+        toolbar.setTitle("首页");
         pagerAdapter = new FragmentAdapter(getSupportFragmentManager(), getLayoutInflater());
         viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                toolbar.setTitle(pagerAdapter.getPageTitle(position));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabHost.setupWithViewPager(viewPager);
         tabHost.setTabMode(TabLayout.MODE_FIXED);
         for (int i = 0; i < 4; i++) {
@@ -42,6 +60,6 @@ public class MainActivity extends RxBaseActivity {
 
     @Override
     public void initToolBar() {
-        toolbar.setTitle("首页");
+        setSupportActionBar(toolbar);
     }
 }
