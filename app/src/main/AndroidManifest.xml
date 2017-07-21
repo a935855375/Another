@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".module.common.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/GrayTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,5 +25,10 @@
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
 </manifest>

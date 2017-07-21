@@ -94,4 +94,6 @@
 
     <color name="unchecked">#D4D4D4</color>
 
+    <color name="video_states">#383B3E</color>
+
 </resources>

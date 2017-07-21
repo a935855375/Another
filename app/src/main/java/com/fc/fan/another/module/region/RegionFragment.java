@@ -36,7 +36,8 @@ public class RegionFragment extends RxLazyFragment {
     }
 
     private void initRecycleView() {
-        RegionItemAdapter mAdapter = new RegionItemAdapter(new String[]{"java", "html", "scala"});
+        RegionItemAdapter mAdapter = new RegionItemAdapter(new String[]{"java",
+                "html", "scala", "css", "node.js"});
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
         mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -54,7 +55,6 @@ public class RegionFragment extends RxLazyFragment {
         });
         mRecycleView.setLayoutManager(mLayoutManager);
         mRecycleView.setAdapter(mAdapter);
-        Log.e(TAG, "DDDDDDDDDDDDDDDD");
     }
 
 }

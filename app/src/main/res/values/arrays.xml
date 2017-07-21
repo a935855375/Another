@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="query_suggestions">
+        <item>java</item>
+        <item>scala</item>
+        <item>html5</item>
+        <item>javascript</item>
+    </string-array>
+</resources>

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fc.fan.another.R;
+import com.fc.fan.another.module.mine.MineFragment;
 import com.fc.fan.another.module.region.RegionFragment;
 
 /**
@@ -16,9 +17,9 @@ import com.fc.fan.another.module.region.RegionFragment;
  */
 
 public class FragmentAdapter extends FragmentPagerAdapter {
-    public static final String[] action = new String[]{"首页", "课程", "下载", "我的"};
+    public static final String[] action = new String[]{"首页", "课程", "浏览", "我的"};
     public static final Integer[] icon = new Integer[]{R.drawable.ic_home_color, R.drawable.ic_course_color
-            , R.drawable.ic_download_color, R.drawable.ic_mine_color};
+            , R.drawable.ic_explore_color, R.drawable.ic_mine_color};
 
     private LayoutInflater inflater;
 
@@ -31,6 +32,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 1)
             return RegionFragment.newInstance();
+        if (position == 3)
+            return MineFragment.newInstance();
         return TestFragment.newInstance(position + "");
     }
 

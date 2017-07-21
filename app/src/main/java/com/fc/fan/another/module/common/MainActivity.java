@@ -4,13 +4,18 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.BindView;
 
 public class MainActivity extends RxBaseActivity {
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.pager)
     ViewPager viewPager;
@@ -20,6 +25,9 @@ public class MainActivity extends RxBaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.search_view)
+    MaterialSearchView mSearchView;
 
     FragmentAdapter pagerAdapter;
 
@@ -56,10 +64,45 @@ public class MainActivity extends RxBaseActivity {
             assert tab != null;
             tab.setCustomView(pagerAdapter.getTypeView(i));
         }
+
+        initSearchView();
+    }
+
+    private void initSearchView() {
+        //初始化SearchBar
+        mSearchView.setVoiceSearch(false);
+        mSearchView.setCursorDrawable(R.drawable.custom_cursor);
+        mSearchView.setEllipsize(true);
+        mSearchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+        mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.e(TAG, "good");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
     public void initToolBar() {
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        mSearchView.setMenuItem(item);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

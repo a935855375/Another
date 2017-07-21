@@ -1,7 +1,6 @@
 package com.fc.fan.another.module.common;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -26,7 +25,7 @@ public class LoginActivity extends RxBaseActivity {
     public static final String TAG = "LoginActivity";
 
     @BindView(R.id.input_id)
-    EditText _idlText;
+    EditText _emailText;
     @BindView(R.id.input_password)
     EditText _passwordText;
     @BindView(R.id.btn_login)
@@ -66,7 +65,7 @@ public class LoginActivity extends RxBaseActivity {
         progressDialog.show();
 
 
-        String id = _idlText.getText().toString();
+        String id = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
         HttpUtils.getInstance()
@@ -88,11 +87,11 @@ public class LoginActivity extends RxBaseActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String id = _idlText.getText().toString();
+        String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (id.isEmpty()) {
-            _idlText.setError("职工号不能为空");
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            _emailText.setError("请输入一个合法的邮箱地址");
             valid = false;
         }
 
