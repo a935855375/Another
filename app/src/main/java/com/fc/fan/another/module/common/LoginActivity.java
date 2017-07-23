@@ -11,6 +11,7 @@ import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
 import com.fc.fan.another.utils.ApiService;
 import com.fc.fan.another.utils.HttpUtils;
+import com.fc.fan.another.utils.PreferenceUtil;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -69,7 +70,7 @@ public class LoginActivity extends RxBaseActivity {
         String password = _passwordText.getText().toString();
 
         HttpUtils.getInstance()
-                .create(ApiService.class, "http://10.0.0.17:8080/")
+                .create(ApiService.class, PreferenceUtil.baseUrl)
                 .test()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

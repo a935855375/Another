@@ -1,6 +1,7 @@
 package com.fc.fan.another.module.entry;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -35,6 +36,7 @@ public class CourseActivity extends AppCompatActivity {
     private Context mContext;
     View rootView;
     private PlayerView player;
+    String url, title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +44,27 @@ public class CourseActivity extends AppCompatActivity {
         mContext = this;
         rootView = LayoutInflater.from(this).inflate(R.layout.activity_course, null);
         setContentView(rootView);
+        Intent intent = getIntent();
+        url = intent.getStringExtra("Url");
+        title = intent.getStringExtra("Title");
+        initPlayer();
+        initView();
+    }
+
+    private void initView() {
+        ViewPager viewPager = rootView.findViewById(R.id.course_viewPager);
+        TabLayout tabLayout = rootView.findViewById(R.id.course_tabLayout);
+
+        CourseAdapter adapter = new CourseAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.post(() -> setIndicator(tabLayout, 40, 40));
+
+        player.startPlay();
+    }
+
+    private void initPlayer() {
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             //比较Activity根布局与当前布局的大小
             int heightDiff = rootView.getRootView().getHeight() - rootView.getHeight();
@@ -57,17 +80,10 @@ public class CourseActivity extends AppCompatActivity {
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         List<VideoijkBean> list = new ArrayList<VideoijkBean>();
-        String url1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
-        String url2 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f30.mp4";
-
         VideoijkBean m1 = new VideoijkBean();
-        m1.setStream("标清");
-        m1.setUrl(url1);
-        VideoijkBean m2 = new VideoijkBean();
-        m2.setStream("高清");
-        m2.setUrl(url2);
+        m1.setStream("原画");
+        m1.setUrl(url);
         list.add(m1);
-        list.add(m2);
         player = new PlayerView(this, rootView) {
             @Override
             public PlayerView toggleProcessDurationOrientation() {
@@ -79,7 +95,7 @@ public class CourseActivity extends AppCompatActivity {
             public PlayerView setPlaySource(List<VideoijkBean> list) {
                 return super.setPlaySource(list);
             }
-        }.setTitle("测试")
+        }.setTitle(title)
                 .setProcessDurationOrientation(PlayStateParams.PROCESS_PORTRAIT)
                 .setScaleType(PlayStateParams.fillparent)
                 .forbidTouch(false)
@@ -92,17 +108,6 @@ public class CourseActivity extends AppCompatActivity {
                         .into(ivThumbnail))*/
                 .setPlaySource(list)
                 .setChargeTie(true, 60);
-
-        ViewPager viewPager = rootView.findViewById(R.id.course_viewPager);
-        TabLayout tabLayout = rootView.findViewById(R.id.course_tabLayout);
-
-        CourseAdapter adapter = new CourseAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        tabLayout.post(() -> setIndicator(tabLayout, 40, 40));
-
-        player.startPlay();
     }
 
     // 设置下划线长度

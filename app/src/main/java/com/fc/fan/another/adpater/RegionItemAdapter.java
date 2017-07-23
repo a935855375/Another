@@ -1,15 +1,24 @@
 package com.fc.fan.another.adpater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.fc.fan.another.R;
+import com.fc.fan.another.module.region.RegionBean;
+import com.fc.fan.another.module.region.RegionItemActivity;
+import com.fc.fan.another.utils.PreferenceUtil;
+
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +32,26 @@ public class RegionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static final int VIEW_TYPE_HEAD = 0;
     public static final int VIEW_TYPE_CONTENT = 1;
     public static final String TAG = RegionItemAdapter.class.getSimpleName();
-    private String[] args;
-    int i = 0;
+    private HashMap<Integer, RegionBean> titleMap;
+    private HashMap<Integer, RegionBean.TypesBean> typeMap;
 
     private Context mContext;
 
-    public RegionItemAdapter(String[] args) {
-        this.args = args;
+    public RegionItemAdapter() {
+        titleMap = new HashMap<>();
+        typeMap = new HashMap<>();
+    }
+
+    public void setRegionBeans(List<RegionBean> regionBeanList) {
+        int q = 0;
+        for (RegionBean regionBean : regionBeanList) {
+            titleMap.put(q, regionBean);
+            q++;
+            for (RegionBean.TypesBean typeBean : regionBean.getTypes()) {
+                typeMap.put(q, typeBean);
+                q++;
+            }
+        }
     }
 
 
@@ -40,34 +62,43 @@ public class RegionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case VIEW_TYPE_HEAD:
                 return new TextViewHolder(LayoutInflater.from(mContext).inflate(R.layout.region_item_text, parent, false));
             case VIEW_TYPE_CONTENT:
-                return new ContentViewHolder(LayoutInflater.from(mContext).inflate(R.layout.region_item_content, parent, false));
+                RecyclerView.ViewHolder holder = new ContentViewHolder(LayoutInflater.from(mContext).inflate(R.layout.region_item_content, parent, false));
+                holder.itemView.setOnClickListener(view -> {
+                    Toast.makeText(mContext, "position:" + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(parent.getContext(), RegionItemActivity.class);
+                    RegionBean.TypesBean bean = typeMap.get(holder.getAdapterPosition());
+                    intent.putExtra("title", bean.getName());
+                    intent.putExtra("tid", bean.getTid());
+                    parent.getContext().startActivity(intent);
+                });
+                return holder;
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position == 0) {
-            ((TextViewHolder) holder).bind("前端开发");
-        } else {
-            ((ContentViewHolder) holder).bind(args[position - 1], R.drawable.logo);
+        switch (getItemViewType(position)) {
+            case VIEW_TYPE_HEAD:
+                ((TextViewHolder) holder).bind(titleMap.get(position).getName());
+                break;
+            case VIEW_TYPE_CONTENT:
+                ((ContentViewHolder) holder).bind(typeMap.get(position).getName(), typeMap.get(position).getPicture());
+                break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return args.length + 1;
+        return typeMap.size() + titleMap.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        i++;
-        switch (position) {
-            case 0:
-                return VIEW_TYPE_HEAD;
-            default:
-                return VIEW_TYPE_CONTENT;
-        }
+        if (titleMap.containsKey(position))
+            return VIEW_TYPE_HEAD;
+        else
+            return VIEW_TYPE_CONTENT;
     }
 
     class TextViewHolder extends RecyclerView.ViewHolder {
@@ -98,11 +129,9 @@ public class RegionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ButterKnife.bind(this, itemView);
         }
 
-        void bind(String text, int id) {
+        void bind(String text, String id) {
             textView.setText(text);
-            Glide.with(mContext).load(id).into(circleImageView);
+            Glide.with(mContext).load(PreferenceUtil.baseUrl + "ff/image/" + id).into(circleImageView);
         }
     }
-
-
 }

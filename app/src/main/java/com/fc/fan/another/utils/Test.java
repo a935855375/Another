@@ -8,48 +8,45 @@ import java.util.List;
 
 public class Test {
 
-    /**
-     * did : 1
-     * name : 前端开发
-     * types : [{"name":"Node.js","tid":5},{"name":"HTML","tid":1},{"name":"Bootstrap","tid":6},{"name":"jQuery","tid":4},{"name":"CSS","tid":2},{"name":"JavaScript","tid":3}]
-     */
+    private List<OfficListBean> officList;
+    private List<ResourceListBean> resourceList;
 
-    private int did;
-    private String name;
-    private List<TypesBean> types;
-
-    public int getDid() {
-        return did;
+    public List<OfficListBean> getOfficList() {
+        return officList;
     }
 
-    public void setDid(int did) {
-        this.did = did;
+    public void setOfficList(List<OfficListBean> officList) {
+        this.officList = officList;
     }
 
-    public String getName() {
-        return name;
+    public List<ResourceListBean> getResourceList() {
+        return resourceList;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setResourceList(List<ResourceListBean> resourceList) {
+        this.resourceList = resourceList;
     }
 
-    public List<TypesBean> getTypes() {
-        return types;
-    }
-
-    public void setTypes(List<TypesBean> types) {
-        this.types = types;
-    }
-
-    public static class TypesBean {
+    public static class OfficListBean {
         /**
-         * name : Node.js
-         * tid : 5
+         * filePath : 1.pdf
+         * name : 复习资料
+         * orid : 1
+         * showPath :
          */
 
+        private String filePath;
         private String name;
-        private int tid;
+        private int orid;
+        private String showPath;
+
+        public String getFilePath() {
+            return filePath;
+        }
+
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
 
         public String getName() {
             return name;
@@ -59,12 +56,66 @@ public class Test {
             this.name = name;
         }
 
-        public int getTid() {
-            return tid;
+        public int getOrid() {
+            return orid;
         }
 
-        public void setTid(int tid) {
-            this.tid = tid;
+        public void setOrid(int orid) {
+            this.orid = orid;
+        }
+
+        public String getShowPath() {
+            return showPath;
+        }
+
+        public void setShowPath(String showPath) {
+            this.showPath = showPath;
+        }
+    }
+
+    public static class ResourceListBean {
+        /**
+         * name : 蒲公英
+         * path : 1.mp4
+         * rid : 1
+         * summary : xxxxx课程
+         */
+
+        private String name;
+        private String path;
+        private int rid;
+        private String summary;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
+        }
+
+        public int getRid() {
+            return rid;
+        }
+
+        public void setRid(int rid) {
+            this.rid = rid;
+        }
+
+        public String getSummary() {
+            return summary;
+        }
+
+        public void setSummary(String summary) {
+            this.summary = summary;
         }
     }
 }

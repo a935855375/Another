@@ -41,6 +41,7 @@ public class MainActivity extends RxBaseActivity {
         toolbar.setTitle("首页");
         pagerAdapter = new FragmentAdapter(getSupportFragmentManager(), getLayoutInflater());
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
