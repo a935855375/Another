@@ -2,14 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/region_item_image"
         android:layout_width="34dp"
         android:layout_height="34dp"
-        android:layout_marginTop="24dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
         android:scaleType="centerCrop" />
 
 

@@ -21,6 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by fan on 7/12/17.
+ * A nice day..
  */
 
 public class RegionFragment extends RxLazyFragment {

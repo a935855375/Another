@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fc.fan.another.R;
+import com.fc.fan.another.module.explore.ExploreFragment;
 import com.fc.fan.another.module.mine.MineFragment;
 import com.fc.fan.another.module.region.RegionFragment;
 
@@ -34,6 +35,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             return RegionFragment.newInstance();
         if (position == 3)
             return MineFragment.newInstance();
+        if (position == 2)
+            return ExploreFragment.newInstance();
         return TestFragment.newInstance(position + "");
     }
 

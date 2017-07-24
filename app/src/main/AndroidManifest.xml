@@ -23,6 +23,7 @@
 
         <activity android:name=".module.common.LoginActivity" />
         <activity android:name=".module.region.RegionItemActivity" />
+        <activity android:name=".module.explore.ExploreActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
