@@ -28,7 +28,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/logo" />
-            2
+
 
             <TextView
                 android:id="@+id/explore_auth_name"
@@ -88,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="3dp"
                 android:paddingTop="3dp"
-                android:text="1000 查看 · " />
+                android:text="1000 查看 · "
+                android:textColor="#919DA4" />
 
             <TextView
                 android:id="@+id/explore_comment_count"
@@ -96,7 +97,8 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="3dp"
                 android:paddingTop="3dp"
-                android:text="29 评论" />
+                android:text="29 评论"
+                android:textColor="#919DA4" />
 
 
         </LinearLayout>

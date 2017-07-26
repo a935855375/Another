@@ -28,6 +28,7 @@
             android:name=".module.course.CourseActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/VideoTheme" />
+        <activity android:name=".module.explore.CommentActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

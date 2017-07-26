@@ -36,6 +36,9 @@ public class ExploreActivity extends RxBaseActivity {
     @BindView(R.id.fab_make_post)
     FloatingActionButton makePost;
 
+    @BindView(R.id.fab_test)
+    FloatingActionButton test;
+
     ExploreItemAdapter adapter;
 
     @Override
@@ -69,6 +72,12 @@ public class ExploreActivity extends RxBaseActivity {
 
         makePost.setOnClickListener(view -> {
             Intent intent = new Intent(this, WriteDownActivity.class);
+            startActivity(intent);
+            fab.close(true);
+        });
+
+        test.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CommentActivity.class);
             startActivity(intent);
             fab.close(true);
         });

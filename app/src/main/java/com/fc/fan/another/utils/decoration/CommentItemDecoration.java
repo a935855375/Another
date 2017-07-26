@@ -1,4 +1,4 @@
-package com.fc.fan.another.utils;
+package com.fc.fan.another.utils.decoration;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,10 +13,10 @@ import com.fc.fan.another.R;
  * Created by fan on 7/22/17.
  */
 
-public class CustomItemDecoration extends RecyclerView.ItemDecoration {
+public class CommentItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable dividerLine;
 
-    public CustomItemDecoration(Context context) {
+    public CommentItemDecoration(Context context) {
         dividerLine = context.getDrawable(R.drawable.main_divider);
     }
 
@@ -35,7 +35,7 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
             int bottom = top + dividerLine.getIntrinsicHeight();
 
             //画分隔线
-            dividerLine.setBounds(left + 50, top, right - 50, bottom);
+            dividerLine.setBounds(left + 170, top, right, bottom);
             dividerLine.draw(c);
         }
     }

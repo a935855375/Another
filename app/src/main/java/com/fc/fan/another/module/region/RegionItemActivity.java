@@ -1,15 +1,12 @@
 package com.fc.fan.another.module.region;
 
 import android.content.Intent;
-import android.graphics.Region;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.ActionBarContainer;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -17,7 +14,7 @@ import com.fc.fan.another.R;
 import com.fc.fan.another.adpater.CourseItemAdapter;
 import com.fc.fan.another.base.RxBaseActivity;
 import com.fc.fan.another.utils.ApiService;
-import com.fc.fan.another.utils.CustomItemDecoration;
+import com.fc.fan.another.utils.decoration.CustomItemDecoration;
 import com.fc.fan.another.utils.HttpUtils;
 import com.fc.fan.another.utils.PreferenceUtil;
 
