@@ -3,119 +3,391 @@ package com.fc.fan.another.utils;
 import java.util.List;
 
 /**
- * Created by fan on 7/18/17.
+ * Created by fan on 7/25/17.
+ * A nice day..
  */
 
 public class Test {
 
-    private List<OfficListBean> officList;
-    private List<ResourceListBean> resourceList;
+    /**
+     * limit : 8
+     * list : [{"commentNumber":1,"content":"塞瓦夫挖掘啊我愕然就；哦啊","lookNumber":8,"qid":2,"style":0,"time":{"date":20,"day":4,"hours":21,"minutes":45,"month":6,"nanos":0,"seconds":25,"time":1500558325000,"timezoneOffset":-480,"year":117},"title":"问题   速度09090","user":{"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}},{"commentNumber":2,"content":"考试xxx然而我色阿尔法萨嘎我恩只是","lookNumber":25,"qid":3,"style":2,"time":{"date":14,"day":5,"hours":14,"minutes":14,"month":6,"nanos":0,"seconds":18,"time":1500012858000,"timezoneOffset":-480,"year":117},"title":"考试问题","user":{"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}},{"commentNumber":11,"content":"李蕙敏提了个问题","lookNumber":11,"qid":1,"style":1,"time":{"date":4,"day":2,"hours":21,"minutes":38,"month":6,"nanos":0,"seconds":57,"time":1499175537000,"timezoneOffset":-480,"year":117},"title":"问题xxx","user":{"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}}]
+     * page : 1
+     * totalCount : 3
+     * totalPage : 1
+     */
 
-    public List<OfficListBean> getOfficList() {
-        return officList;
+    private int limit;
+    private int page;
+    private int totalCount;
+    private int totalPage;
+    private List<ListBean> list;
+
+    public int getLimit() {
+        return limit;
     }
 
-    public void setOfficList(List<OfficListBean> officList) {
-        this.officList = officList;
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 
-    public List<ResourceListBean> getResourceList() {
-        return resourceList;
+    public int getPage() {
+        return page;
     }
 
-    public void setResourceList(List<ResourceListBean> resourceList) {
-        this.resourceList = resourceList;
+    public void setPage(int page) {
+        this.page = page;
     }
 
-    public static class OfficListBean {
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public static class ListBean {
         /**
-         * filePath : 1.pdf
-         * name : 复习资料
-         * orid : 1
-         * showPath :
+         * commentNumber : 1
+         * content : 塞瓦夫挖掘啊我愕然就；哦啊
+         * lookNumber : 8
+         * qid : 2
+         * style : 0
+         * time : {"date":20,"day":4,"hours":21,"minutes":45,"month":6,"nanos":0,"seconds":25,"time":1500558325000,"timezoneOffset":-480,"year":117}
+         * title : 问题   速度09090
+         * user : {"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}
          */
 
-        private String filePath;
-        private String name;
-        private int orid;
-        private String showPath;
+        private int commentNumber;
+        private String content;
+        private int lookNumber;
+        private int qid;
+        private int style;
+        private TimeBean time;
+        private String title;
+        private UserBean user;
 
-        public String getFilePath() {
-            return filePath;
+        public int getCommentNumber() {
+            return commentNumber;
         }
 
-        public void setFilePath(String filePath) {
-            this.filePath = filePath;
+        public void setCommentNumber(int commentNumber) {
+            this.commentNumber = commentNumber;
         }
 
-        public String getName() {
-            return name;
+        public String getContent() {
+            return content;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setContent(String content) {
+            this.content = content;
         }
 
-        public int getOrid() {
-            return orid;
+        public int getLookNumber() {
+            return lookNumber;
         }
 
-        public void setOrid(int orid) {
-            this.orid = orid;
+        public void setLookNumber(int lookNumber) {
+            this.lookNumber = lookNumber;
         }
 
-        public String getShowPath() {
-            return showPath;
+        public int getQid() {
+            return qid;
         }
 
-        public void setShowPath(String showPath) {
-            this.showPath = showPath;
-        }
-    }
-
-    public static class ResourceListBean {
-        /**
-         * name : 蒲公英
-         * path : 1.mp4
-         * rid : 1
-         * summary : xxxxx课程
-         */
-
-        private String name;
-        private String path;
-        private int rid;
-        private String summary;
-
-        public String getName() {
-            return name;
+        public void setQid(int qid) {
+            this.qid = qid;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public int getStyle() {
+            return style;
         }
 
-        public String getPath() {
-            return path;
+        public void setStyle(int style) {
+            this.style = style;
         }
 
-        public void setPath(String path) {
-            this.path = path;
+        public TimeBean getTime() {
+            return time;
         }
 
-        public int getRid() {
-            return rid;
+        public void setTime(TimeBean time) {
+            this.time = time;
         }
 
-        public void setRid(int rid) {
-            this.rid = rid;
+        public String getTitle() {
+            return title;
         }
 
-        public String getSummary() {
-            return summary;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
-        public void setSummary(String summary) {
-            this.summary = summary;
+        public UserBean getUser() {
+            return user;
+        }
+
+        public void setUser(UserBean user) {
+            this.user = user;
+        }
+
+        public static class TimeBean {
+            /**
+             * date : 20
+             * day : 4
+             * hours : 21
+             * minutes : 45
+             * month : 6
+             * nanos : 0
+             * seconds : 25
+             * time : 1500558325000
+             * timezoneOffset : -480
+             * year : 117
+             */
+
+            private int date;
+            private int day;
+            private int hours;
+            private int minutes;
+            private int month;
+            private int nanos;
+            private int seconds;
+            private long time;
+            private int timezoneOffset;
+            private int year;
+
+            public int getDate() {
+                return date;
+            }
+
+            public void setDate(int date) {
+                this.date = date;
+            }
+
+            public int getDay() {
+                return day;
+            }
+
+            public void setDay(int day) {
+                this.day = day;
+            }
+
+            public int getHours() {
+                return hours;
+            }
+
+            public void setHours(int hours) {
+                this.hours = hours;
+            }
+
+            public int getMinutes() {
+                return minutes;
+            }
+
+            public void setMinutes(int minutes) {
+                this.minutes = minutes;
+            }
+
+            public int getMonth() {
+                return month;
+            }
+
+            public void setMonth(int month) {
+                this.month = month;
+            }
+
+            public int getNanos() {
+                return nanos;
+            }
+
+            public void setNanos(int nanos) {
+                this.nanos = nanos;
+            }
+
+            public int getSeconds() {
+                return seconds;
+            }
+
+            public void setSeconds(int seconds) {
+                this.seconds = seconds;
+            }
+
+            public long getTime() {
+                return time;
+            }
+
+            public void setTime(long time) {
+                this.time = time;
+            }
+
+            public int getTimezoneOffset() {
+                return timezoneOffset;
+            }
+
+            public void setTimezoneOffset(int timezoneOffset) {
+                this.timezoneOffset = timezoneOffset;
+            }
+
+            public int getYear() {
+                return year;
+            }
+
+            public void setYear(int year) {
+                this.year = year;
+            }
+        }
+
+        public static class UserBean {
+            /**
+             * degree : 0
+             * department : null
+             * email : 12345678@qq.com
+             * isRoot : 0
+             * job :
+             * password : 12
+             * phone :
+             * picture : 1.jpg
+             * realname :
+             * sex :
+             * store :
+             * uid : 1
+             * username : 李
+             */
+
+            private int degree;
+            private Object department;
+            private String email;
+            private int isRoot;
+            private String job;
+            private String password;
+            private String phone;
+            private String picture;
+            private String realname;
+            private String sex;
+            private String store;
+            private int uid;
+            private String username;
+
+            public int getDegree() {
+                return degree;
+            }
+
+            public void setDegree(int degree) {
+                this.degree = degree;
+            }
+
+            public Object getDepartment() {
+                return department;
+            }
+
+            public void setDepartment(Object department) {
+                this.department = department;
+            }
+
+            public String getEmail() {
+                return email;
+            }
+
+            public void setEmail(String email) {
+                this.email = email;
+            }
+
+            public int getIsRoot() {
+                return isRoot;
+            }
+
+            public void setIsRoot(int isRoot) {
+                this.isRoot = isRoot;
+            }
+
+            public String getJob() {
+                return job;
+            }
+
+            public void setJob(String job) {
+                this.job = job;
+            }
+
+            public String getPassword() {
+                return password;
+            }
+
+            public void setPassword(String password) {
+                this.password = password;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
+            public String getPicture() {
+                return picture;
+            }
+
+            public void setPicture(String picture) {
+                this.picture = picture;
+            }
+
+            public String getRealname() {
+                return realname;
+            }
+
+            public void setRealname(String realname) {
+                this.realname = realname;
+            }
+
+            public String getSex() {
+                return sex;
+            }
+
+            public void setSex(String sex) {
+                this.sex = sex;
+            }
+
+            public String getStore() {
+                return store;
+            }
+
+            public void setStore(String store) {
+                this.store = store;
+            }
+
+            public int getUid() {
+                return uid;
+            }
+
+            public void setUid(int uid) {
+                this.uid = uid;
+            }
+
+            public String getUsername() {
+                return username;
+            }
+
+            public void setUsername(String username) {
+                this.username = username;
+            }
         }
     }
 }

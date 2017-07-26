@@ -1,5 +1,6 @@
 package com.fc.fan.another.utils;
 
+import com.fc.fan.another.module.course.ResourceBean;
 import com.fc.fan.another.module.region.RegionBean;
 import com.fc.fan.another.module.region.RegionItemBean;
 
@@ -38,5 +39,8 @@ public interface ApiService {
 
     @GET("ff/types/types_selectCoursePageByTid")
     Observable<RegionItemBean> getRegionItem(@Query("tid") int tid, @Query("page") int page);
+
+    @GET("ff/course/course_getCourseMessage.action")
+    Observable<ResourceBean> getVideoResource(@Query("cid") int cid);
 
 }

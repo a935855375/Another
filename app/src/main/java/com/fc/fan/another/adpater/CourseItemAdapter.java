@@ -1,8 +1,8 @@
 package com.fc.fan.another.adpater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fc.fan.another.R;
+import com.fc.fan.another.module.course.CourseActivity;
 import com.fc.fan.another.module.region.RegionItemBean;
 import com.fc.fan.another.utils.PreferenceUtil;
 
@@ -48,8 +49,10 @@ public class CourseItemAdapter extends RecyclerView.Adapter {
         ViewHolder holder = new ViewHolder(view);
         view.setOnClickListener(view1 -> {
             RegionItemBean.ListBean bean = map.get(holder.getAdapterPosition());
-            Log.e(TAG, "cid = " + bean.getCid());
-            Log.e(TAG, holder.getAdapterPosition() + "");
+            Intent intent = new Intent(mContext, CourseActivity.class);
+            intent.putExtra("Title", bean.getName());
+            intent.putExtra("Cid", bean.getCid());
+            mContext.startActivity(intent);
         });
         return holder;
     }

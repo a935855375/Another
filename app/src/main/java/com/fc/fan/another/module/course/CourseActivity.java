@@ -1,42 +1,56 @@
-package com.fc.fan.another.module.entry;
+package com.fc.fan.another.module.course;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.support.design.widget.TabLayout;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.dou361.ijkplayer.bean.VideoijkBean;
 import com.dou361.ijkplayer.widget.PlayStateParams;
 import com.dou361.ijkplayer.widget.PlayerView;
 import com.fc.fan.another.R;
 import com.fc.fan.another.adpater.CourseAdapter;
+import com.fc.fan.another.utils.ApiService;
+import com.fc.fan.another.utils.HttpUtils;
 import com.fc.fan.another.utils.MediaUtils;
+import com.fc.fan.another.utils.PreferenceUtil;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by fan on 7/17/17.
  */
 
 public class CourseActivity extends AppCompatActivity {
+    public static final String TAG = CourseActivity.class.getSimpleName();
 
     private Context mContext;
-    View rootView;
+    private View rootView;
     private PlayerView player;
-    String url, title;
+    private String title;
+    private int cid;
+
+    CourseAdapter adapter;
+    ChapterFragment chapterFragment;
+    DetailFragment detailFragment;
+
+    ViewPager viewPager;
+
+    List<VideoijkBean> list;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,23 +59,69 @@ public class CourseActivity extends AppCompatActivity {
         rootView = LayoutInflater.from(this).inflate(R.layout.activity_course, null);
         setContentView(rootView);
         Intent intent = getIntent();
-        url = intent.getStringExtra("Url");
+        cid = intent.getIntExtra("Cid", 0);
         title = intent.getStringExtra("Title");
+        list = new ArrayList<VideoijkBean>();
         initPlayer();
         initView();
     }
 
     private void initView() {
-        ViewPager viewPager = rootView.findViewById(R.id.course_viewPager);
+        viewPager = rootView.findViewById(R.id.course_viewPager);
         TabLayout tabLayout = rootView.findViewById(R.id.course_tabLayout);
 
-        CourseAdapter adapter = new CourseAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        tabLayout.post(() -> setIndicator(tabLayout, 40, 40));
+        adapter = new CourseAdapter(getSupportFragmentManager());
 
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayout.setupWithViewPager(viewPager);
+
+        chapterFragment = ChapterFragment.newInstance();
+        adapter.addTab(chapterFragment, "章节");
+        detailFragment = DetailFragment.newInstance();
+        adapter.addTab(detailFragment, "详情");
+        viewPager.setAdapter(adapter);
+
+        getData();
+
+        //player.startPlay();
+    }
+
+    public void notifyChanged(ResourceBean.ResourceListBean bean) {
+        Log.e(TAG, "asdsada");
+        detailFragment.setCotent(bean.getSummary());
+        list.clear();
+        VideoijkBean m = new VideoijkBean();
+        m.setStream("原画");
+        m.setUrl(PreferenceUtil.baseUrl + "ff/video/" + bean.getPath());
+        list.add(m);
+        player.setPlaySource(list);
         player.startPlay();
+    }
+
+    private void getData() {
+        HttpUtils.getInstance()
+                .create(ApiService.class, PreferenceUtil.baseUrl)
+                .getVideoResource(cid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::finishLoad, throwable -> Log.e(TAG, throwable.getMessage()));
+    }
+
+    private void finishLoad(ResourceBean bean) {
+        if (bean.getResourceList().size() > 0) {
+            initVideoView(bean.getResourceList());
+            initOfficeView(bean.getOfficList());
+        } else {
+            Toast.makeText(this, "sorry,该课程暂时还没有任何资源..", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void initVideoView(List<ResourceBean.ResourceListBean> videoList) {
+        chapterFragment.setResource(videoList);
+    }
+
+    private void initOfficeView(List<ResourceBean.OfficListBean> officeList) {
+
     }
 
     private void initPlayer() {
@@ -74,16 +134,10 @@ public class CourseActivity extends AppCompatActivity {
             } else {
                 //大小小于100时，为不显示虚拟键盘或虚拟键盘隐藏
                 rootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-
             }
         });
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        List<VideoijkBean> list = new ArrayList<VideoijkBean>();
-        VideoijkBean m1 = new VideoijkBean();
-        m1.setStream("原画");
-        m1.setUrl(url);
-        list.add(m1);
         player = new PlayerView(this, rootView) {
             @Override
             public PlayerView toggleProcessDurationOrientation() {
@@ -106,42 +160,7 @@ public class CourseActivity extends AppCompatActivity {
                         .placeholder(R.color.white)
                         .error(R.color.red)
                         .into(ivThumbnail))*/
-                .setPlaySource(list)
                 .setChargeTie(true, 60);
-    }
-
-    // 设置下划线长度
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        if (tabStrip != null) {
-            tabStrip.setAccessible(true);
-        }
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-
-        for (int i = 0; i < (llTab != null ? llTab.getChildCount() : 0); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
     }
 
     @Override

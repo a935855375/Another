@@ -1,5 +1,6 @@
 package com.fc.fan.another.module.explore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,13 +14,11 @@ import com.fc.fan.another.R;
 import com.fc.fan.another.adpater.ExploreItemAdapter;
 import com.fc.fan.another.base.RxBaseActivity;
 import com.fc.fan.another.utils.decoration.SpacesItemVerticalDecoration;
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
 
-/**
- * Created by fan on 7/23/17.
- */
 
 public class ExploreActivity extends RxBaseActivity {
     public static final String TAG = ExploreActivity.class.getSimpleName();
@@ -33,6 +32,9 @@ public class ExploreActivity extends RxBaseActivity {
 
     @BindView(R.id.explore_toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.fab_make_post)
+    FloatingActionButton makePost;
 
     ExploreItemAdapter adapter;
 
@@ -64,6 +66,12 @@ public class ExploreActivity extends RxBaseActivity {
         fab.setClosedOnTouchOutside(true);
 
         recyclerView.setAdapter(adapter);
+
+        makePost.setOnClickListener(view -> {
+            Intent intent = new Intent(this, WriteDownActivity.class);
+            startActivity(intent);
+            fab.close(true);
+        });
     }
 
     @Override

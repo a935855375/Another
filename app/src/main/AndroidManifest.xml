@@ -12,7 +12,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".module.common.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/GrayTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +23,11 @@
         <activity android:name=".module.common.LoginActivity" />
         <activity android:name=".module.region.RegionItemActivity" />
         <activity android:name=".module.explore.ExploreActivity" />
+        <activity android:name=".module.explore.WriteDownActivity" />
+        <activity
+            android:name=".module.course.CourseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/VideoTheme" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

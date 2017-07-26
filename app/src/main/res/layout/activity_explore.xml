@@ -25,6 +25,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab"
         android:layout_width="match_parent"
@@ -42,7 +43,7 @@
         app:menu_labels_singleLine="true">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_upload"
+            android:id="@+id/fab_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/share"
@@ -52,7 +53,7 @@
             app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_preview"
+            android:id="@+id/fab_make_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/make_post"

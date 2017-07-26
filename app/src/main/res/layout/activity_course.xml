@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.entry.CourseActivity">
+    tools:context=".module.course.CourseActivity">
 
     <include
         layout="@layout/simple_player_view_player"
@@ -18,7 +18,7 @@
         android:layout_height="48dp"
         android:layout_gravity="bottom"
         android:background="#FFFFFF"
-        android:elevation="15dp"
+        android:elevation="1dp"
         app:tabSelectedTextColor="@color/colorAccent" />
 
     <FrameLayout
