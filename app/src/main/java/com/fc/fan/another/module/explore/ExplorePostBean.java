@@ -1,19 +1,19 @@
-package com.fc.fan.another.utils;
+package com.fc.fan.another.module.explore;
 
 import java.util.List;
 
 /**
- * Created by fan on 7/25/17.
+ * Created by fan on 7/26/17.
  * A nice day..
  */
 
-public class Test {
+public class ExplorePostBean {
 
     /**
      * limit : 8
-     * list : [{"commentNumber":1,"content":"塞瓦夫挖掘啊我愕然就；哦啊","lookNumber":8,"qid":2,"style":0,"time":{"date":20,"day":4,"hours":21,"minutes":45,"month":6,"nanos":0,"seconds":25,"time":1500558325000,"timezoneOffset":-480,"year":117},"title":"问题   速度09090","user":{"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}},{"commentNumber":2,"content":"考试xxx然而我色阿尔法萨嘎我恩只是","lookNumber":25,"qid":3,"style":2,"time":{"date":14,"day":5,"hours":14,"minutes":14,"month":6,"nanos":0,"seconds":18,"time":1500012858000,"timezoneOffset":-480,"year":117},"title":"考试问题","user":{"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}},{"commentNumber":11,"content":"李蕙敏提了个问题","lookNumber":11,"qid":1,"style":1,"time":{"date":4,"day":2,"hours":21,"minutes":38,"month":6,"nanos":0,"seconds":57,"time":1499175537000,"timezoneOffset":-480,"year":117},"title":"问题xxx","user":{"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}}]
+     * list : [{"commentNumber":11,"content":"李蕙敏提了个问题","lookNumber":15,"qid":1,"style":1,"time":{"date":4,"day":2,"hours":21,"minutes":38,"month":6,"nanos":0,"seconds":57,"time":1499175537000,"timezoneOffset":-480,"year":117},"title":"问题xxx","user":{"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}}]
      * page : 1
-     * totalCount : 3
+     * totalCount : 1
      * totalPage : 1
      */
 
@@ -65,13 +65,13 @@ public class Test {
 
     public static class ListBean {
         /**
-         * commentNumber : 1
-         * content : 塞瓦夫挖掘啊我愕然就；哦啊
-         * lookNumber : 8
-         * qid : 2
-         * style : 0
-         * time : {"date":20,"day":4,"hours":21,"minutes":45,"month":6,"nanos":0,"seconds":25,"time":1500558325000,"timezoneOffset":-480,"year":117}
-         * title : 问题   速度09090
+         * commentNumber : 11
+         * content : 李蕙敏提了个问题
+         * lookNumber : 15
+         * qid : 1
+         * style : 1
+         * time : {"date":4,"day":2,"hours":21,"minutes":38,"month":6,"nanos":0,"seconds":57,"time":1499175537000,"timezoneOffset":-480,"year":117}
+         * title : 问题xxx
          * user : {"degree":0,"department":null,"email":"12345678@qq.com","isRoot":0,"job":"","password":"12","phone":"","picture":"1.jpg","realname":"","sex":"","store":"","uid":1,"username":"李"}
          */
 
@@ -150,14 +150,14 @@ public class Test {
 
         public static class TimeBean {
             /**
-             * date : 20
-             * day : 4
+             * date : 4
+             * day : 2
              * hours : 21
-             * minutes : 45
+             * minutes : 38
              * month : 6
              * nanos : 0
-             * seconds : 25
-             * time : 1500558325000
+             * seconds : 57
+             * time : 1499175537000
              * timezoneOffset : -480
              * year : 117
              */

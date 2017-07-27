@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:background="?attr/selectableItemBackgroundBorderless"
-    android:foreground="?attr/selectableItemBackgroundBorderless"
     android:clickable="true"
     android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
     app:cardCornerRadius="3dp">
 
     <FrameLayout
@@ -16,7 +16,8 @@
         <ImageView
             android:id="@+id/explore_item_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/explore_item_text"
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
 
     </FrameLayout>

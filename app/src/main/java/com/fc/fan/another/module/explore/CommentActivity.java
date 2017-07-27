@@ -65,6 +65,7 @@ public class CommentActivity extends RxBaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.close_x);
             actionBar.setTitle("测试");
         }
     }

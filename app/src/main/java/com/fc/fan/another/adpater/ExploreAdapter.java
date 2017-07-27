@@ -3,47 +3,48 @@ package com.fc.fan.another.adpater;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fc.fan.another.R;
 import com.fc.fan.another.module.explore.ExploreActivity;
+import com.fc.fan.another.module.explore.ExploreRegionBean;
+import com.fc.fan.another.utils.PreferenceUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by fan on 7/23/17.
- */
-
 public class ExploreAdapter extends RecyclerView.Adapter {
     public static final String TAG = ExploreAdapter.class.getSimpleName();
     private Context mContext;
+    private List<ExploreRegionBean.ListBean> list;
+
+    public ExploreAdapter(List<ExploreRegionBean.ListBean> list) {
+        this.list = list;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null)
             mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.explore_item, parent, false);
-        view.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, ExploreActivity.class);
-            mContext.startActivity(intent);
-        });
-        return new ViewHolder(view);
+
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.explore_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).bind();
+        ((ViewHolder) holder).bind(list.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return list.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -53,14 +54,20 @@ public class ExploreAdapter extends RecyclerView.Adapter {
         @BindView(R.id.explore_item_text)
         TextView textView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind() {
-            imageView.setImageResource(R.drawable.logo);
-            textView.setText("测试");
+        void bind(ExploreRegionBean.ListBean bean) {
+            Glide.with(mContext).load(PreferenceUtil.baseUrl + "ff/image/" + bean.getPicture()).into(imageView);
+            textView.setText(bean.getName());
+            this.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, ExploreActivity.class);
+                intent.putExtra("style", bean.getStyle());
+                intent.putExtra("name", bean.getName());
+                mContext.startActivity(intent);
+            });
         }
     }
 }

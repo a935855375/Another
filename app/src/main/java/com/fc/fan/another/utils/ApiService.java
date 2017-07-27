@@ -1,6 +1,8 @@
 package com.fc.fan.another.utils;
 
 import com.fc.fan.another.module.course.ResourceBean;
+import com.fc.fan.another.module.explore.ExplorePostBean;
+import com.fc.fan.another.module.explore.ExploreRegionBean;
 import com.fc.fan.another.module.region.RegionBean;
 import com.fc.fan.another.module.region.RegionItemBean;
 
@@ -43,4 +45,9 @@ public interface ApiService {
     @GET("ff/course/course_getCourseMessage.action")
     Observable<ResourceBean> getVideoResource(@Query("cid") int cid);
 
+    @GET("ff/question/question_getQuestionTypeInAndroid")
+    Observable<ExploreRegionBean> getExploreRegion();
+
+    @GET("ff/question/question_getQuestionTypePage")
+    Observable<ExplorePostBean> getExplorePost(@Query("page") int page, @Query("type") int type);
 }

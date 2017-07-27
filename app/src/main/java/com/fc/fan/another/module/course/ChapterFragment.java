@@ -22,8 +22,6 @@ import butterknife.BindView;
 public class ChapterFragment extends RxLazyFragment {
     public static final String TAG = ChapterFragment.class.getSimpleName();
 
-    private List<ResourceBean.ResourceListBean> videoList;
-
     private CourseChapterAdapter adapter;
 
     public static ChapterFragment newInstance() {
@@ -52,7 +50,6 @@ public class ChapterFragment extends RxLazyFragment {
     }
 
     public void setResource(List<ResourceBean.ResourceListBean> videoList) {
-        this.videoList = videoList;
         adapter = new CourseChapterAdapter(videoList, getActivity());
         recyclerView.setAdapter(adapter);
     }
