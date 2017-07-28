@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/Another.iml" filepath="$PROJECT_DIR$/Another.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/jjdxm-ijkplayer/jjdxm-ijkplayer.iml" filepath="$PROJECT_DIR$/jjdxm-ijkplayer/jjdxm-ijkplayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/popwindow/popwindow.iml" filepath="$PROJECT_DIR$/popwindow/popwindow.iml" />
     </modules>
   </component>
 </project>

@@ -8,6 +8,9 @@ import android.view.View;
 
 import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
+import com.fc.fan.another.utils.ApiService;
+import com.fc.fan.another.utils.HttpUtils;
+import com.fc.fan.another.utils.PreferenceUtil;
 
 import butterknife.BindView;
 
@@ -39,6 +42,11 @@ public class WriteDownActivity extends RxBaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("测试");
         }
+    }
+
+    private void postData() {
+        HttpUtils.getInstance()
+                .create(ApiService.class, PreferenceUtil.baseUrl);
     }
 
     @Override

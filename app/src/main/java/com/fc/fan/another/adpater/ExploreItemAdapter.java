@@ -1,20 +1,22 @@
 package com.fc.fan.another.adpater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fc.fan.another.R;
 import com.fc.fan.another.module.explore.ExploreActivity;
 import com.fc.fan.another.module.explore.ExplorePostBean;
+import com.fc.fan.another.module.explore.PostContentSideActivity;
 import com.fc.fan.another.utils.PreferenceUtil;
 
 import java.util.List;
@@ -39,8 +41,8 @@ public class ExploreItemAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null)
             mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.explore_item_view_holder, parent, false);
-        return new CardViewHolder(view);
+        return new CardViewHolder(LayoutInflater.from(mContext).inflate(R.layout.explore_item_view_holder,
+                parent, false));
     }
 
     @Override
@@ -93,6 +95,13 @@ public class ExploreItemAdapter extends RecyclerView.Adapter {
                 PopupMenu popupMenu = new PopupMenu(mContext, menuButton);
                 popupMenu.getMenuInflater().inflate(R.menu.pop_menu, popupMenu.getMenu());
                 popupMenu.show();
+            });
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(mContext, PostContentSideActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("bean", bean);
+                intent.putExtra("args", args);
+                mContext.startActivity(intent);
             });
         }
     }

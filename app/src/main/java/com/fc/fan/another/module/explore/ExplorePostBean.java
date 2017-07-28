@@ -1,5 +1,6 @@
 package com.fc.fan.another.module.explore;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * A nice day..
  */
 
-public class ExplorePostBean {
+public class ExplorePostBean implements Serializable {
 
     /**
      * limit : 8
@@ -63,7 +64,7 @@ public class ExplorePostBean {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable {
         /**
          * commentNumber : 11
          * content : 李蕙敏提了个问题
@@ -148,7 +149,7 @@ public class ExplorePostBean {
             this.user = user;
         }
 
-        public static class TimeBean {
+        public static class TimeBean implements Serializable {
             /**
              * date : 4
              * day : 2
@@ -254,7 +255,7 @@ public class ExplorePostBean {
             }
         }
 
-        public static class UserBean {
+        public static class UserBean implements Serializable {
             /**
              * degree : 0
              * department : null

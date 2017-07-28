@@ -1,28 +1,25 @@
 package com.fc.fan.another.adpater;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.zhouwei.library.CustomPopWindow;
+import com.bumptech.glide.Glide;
 import com.fc.fan.another.R;
-import com.fc.fan.another.module.explore.CommentActivity;
+import com.fc.fan.another.module.explore.PostCommentBean;
+import com.fc.fan.another.utils.PreferenceUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by fan on 7/26/17.
@@ -32,31 +29,30 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 public class CommentAdapter extends RecyclerView.Adapter {
     public static final String TAG = CommentAdapter.class.getSimpleName();
 
-    private Context mContext;
-    private CommentActivity activity;
+    private List<PostCommentBean.ListBean> list;
 
-    public CommentAdapter(CommentActivity activity) {
-        this.activity = activity;
+    public CommentAdapter(List<PostCommentBean.ListBean> list) {
+        this.list = list;
     }
 
+    private Context mContext;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mContext == null)
             mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.comment_item_view_holder, parent, false);
-        RecyclerView.ViewHolder holder = new CommentViewHolder(view);
-        return holder;
+        return new CommentViewHolder(LayoutInflater.from(mContext)
+                .inflate(R.layout.comment_item_view_holder, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((CommentViewHolder) holder).bind();
+        ((CommentViewHolder) holder).bind(list.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 18;
+        return list.size();
     }
 
     class CommentViewHolder extends RecyclerView.ViewHolder {
@@ -73,37 +69,25 @@ public class CommentAdapter extends RecyclerView.Adapter {
         @BindView(R.id.comment_time)
         TextView time;
 
-        public CommentViewHolder(View itemView) {
+        CommentViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(view -> {
-                InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(activity.getEdit().getWindowToken(), 0);
-                View testView = LayoutInflater.from(mContext).inflate(R.layout.comment_pop_menu, null);
-                LinearLayout dd = testView.findViewById(R.id.comment_copy);
-
-                CustomPopWindow pop = new CustomPopWindow.PopupWindowBuilder(mContext)
-                        .setView(testView)
-                        .enableBackgroundDark(true)
-                        .setBgDarkAlpha(0.7f)
-                        .size(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .create()
-                        .showAtLocation(itemView.getRootView(), Gravity.BOTTOM, 0, 0);
-
-                dd.setOnClickListener(v -> {
-                    Log.e(TAG, "ggggggggggg");
-                    pop.dissmiss();
-                });
-            });
         }
 
-        public void bind() {
-            headView.setImageResource(R.drawable.logo);
-            author.setText("这个是作者");
+        void bind(PostCommentBean.ListBean bean) {
+            Glide.with(mContext).load(PreferenceUtil.baseUrl + "ff/image/" + bean.getUser().getPicture()).into(headView);
+            author.setText(bean.getUser().getUsername());
             author.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-            content.setText("这里是很长的评论内容，很长很长很长很长很长很长很长很长很长很长很长很长很长很" +
-                    "很长很长很长很长很长很长很长");
-            time.setText("07-22");
+            content.setText(bean.getContent());
+            time.setText(bean.getTime().getMonth() + "-" + bean.getTime().getDay());
+
+            itemView.setOnClickListener(v -> {
+                View view = LayoutInflater.from(mContext).inflate(R.layout.comment_pop_menu, null);
+                final BottomSheetDialog dialog = new BottomSheetDialog(mContext);
+                view.findViewById(R.id.comment_copy).setOnClickListener(vv -> dialog.dismiss());
+                dialog.setContentView(view);
+                dialog.show();
+            });
         }
     }
 }

@@ -75,7 +75,7 @@ public class CourseChapterAdapter extends RecyclerView.Adapter {
         @BindView(R.id.chapter_item_text)
         TextView textView;
 
-        public ChapterViewHolder(View itemView) {
+        ChapterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

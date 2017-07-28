@@ -20,10 +20,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by fan on 7/22/17.
- */
-
 public class CourseItemAdapter extends RecyclerView.Adapter {
     public static String TAG = CourseItemAdapter.class.getSimpleName();
 
@@ -80,12 +76,12 @@ public class CourseItemAdapter extends RecyclerView.Adapter {
         @BindView(R.id.content_click_count)
         TextView clickCount;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(RegionItemBean.ListBean listBean) {
+        void bind(RegionItemBean.ListBean listBean) {
             Glide.with(mContext).load(PreferenceUtil.baseUrl + "ff/image/" + listBean.getPicture()).into(titleImage);
             title.setText(listBean.getName());
             describe.setText(listBean.getSummary());

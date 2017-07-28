@@ -3,6 +3,7 @@ package com.fc.fan.another.utils;
 import com.fc.fan.another.module.course.ResourceBean;
 import com.fc.fan.another.module.explore.ExplorePostBean;
 import com.fc.fan.another.module.explore.ExploreRegionBean;
+import com.fc.fan.another.module.explore.PostCommentBean;
 import com.fc.fan.another.module.region.RegionBean;
 import com.fc.fan.another.module.region.RegionItemBean;
 
@@ -50,4 +51,13 @@ public interface ApiService {
 
     @GET("ff/question/question_getQuestionTypePage")
     Observable<ExplorePostBean> getExplorePost(@Query("page") int page, @Query("type") int type);
+
+    @GET("ff/answer/answer_getAnswerPageByQid")
+    Observable<PostCommentBean> getPostComment(@Query("page") int page, @Query("qid") int qid);
+
+    @FormUrlEncoded
+    @POST("/Fc/login/test2")
+    Observable<PostCommentBean> postWriteDown(@Field("title") String title, @Field("content") String content);
+
+    //Observable<PostCommentBean> postComment(@Field("user") );
 }

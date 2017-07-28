@@ -22,10 +22,6 @@ import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by fan on 7/22/17.
- */
-
 public class RegionItemActivity extends RxBaseActivity {
     public static final String TAG = RegionItemActivity.class.getSimpleName();
 

@@ -1,5 +1,6 @@
 package com.fc.fan.another.module.common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 
 import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
+import com.fc.fan.another.module.explore.PostContentActivity;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.BindView;
@@ -104,6 +106,12 @@ public class MainActivity extends RxBaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.message:
+                Intent intent = new Intent(this, PostContentActivity.class);
+                startActivity(intent);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 }
