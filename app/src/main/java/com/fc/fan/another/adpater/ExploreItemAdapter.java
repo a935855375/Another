@@ -25,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
 public class ExploreItemAdapter extends RecyclerView.Adapter {
     public static final String TAG = ExploreActivity.class.getSimpleName();
 

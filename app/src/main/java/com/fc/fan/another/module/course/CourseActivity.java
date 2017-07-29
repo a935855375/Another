@@ -31,9 +31,6 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by fan on 7/17/17.
- */
 
 public class CourseActivity extends AppCompatActivity {
     public static final String TAG = CourseActivity.class.getSimpleName();
@@ -61,7 +58,7 @@ public class CourseActivity extends AppCompatActivity {
         Intent intent = getIntent();
         cid = intent.getIntExtra("Cid", 0);
         title = intent.getStringExtra("Title");
-        list = new ArrayList<VideoijkBean>();
+        list = new ArrayList<>();
         initPlayer();
         initView();
     }
@@ -83,11 +80,9 @@ public class CourseActivity extends AppCompatActivity {
 
         getData();
 
-        //player.startPlay();
     }
 
     public void notifyChanged(ResourceBean.ResourceListBean bean) {
-        Log.e(TAG, "asdsada");
         detailFragment.setCotent(bean.getSummary());
         list.clear();
         VideoijkBean m = new VideoijkBean();

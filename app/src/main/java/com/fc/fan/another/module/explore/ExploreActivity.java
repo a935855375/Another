@@ -34,6 +34,8 @@ import io.reactivex.schedulers.Schedulers;
 public class ExploreActivity extends RxBaseActivity {
     public static final String TAG = ExploreActivity.class.getSimpleName();
 
+    public static final int WRITEDOWNRETURN = 1;
+
     @BindView(R.id.recycler_explore)
     RecyclerView recyclerView;
 
@@ -111,7 +113,8 @@ public class ExploreActivity extends RxBaseActivity {
 
         makePost.setOnClickListener(view -> {
             Intent intent = new Intent(this, WriteDownActivity.class);
-            startActivity(intent);
+            intent.putExtra("type", style);
+            startActivityForResult(intent, 1);
             fab.postDelayed((() -> fab.close(true)), 300);
         });
 
@@ -198,5 +201,16 @@ public class ExploreActivity extends RxBaseActivity {
         if (item.getItemId() == android.R.id.home)
             finish();
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case WRITEDOWNRETURN:
+                if (resultCode == RESULT_OK)
+                    refreshData();
+                break;
+        }
     }
 }

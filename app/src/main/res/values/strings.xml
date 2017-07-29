@@ -7,7 +7,7 @@
     <string name="item_setting">设置</string>
     <string name="mail">935855375@qq.com</string>
     <string name="username">Blank Cloud</string>
-    <string name="edit_email">邮箱</string>
+    <string name="edit_email">用户名/邮箱</string>
     <string name="edit_password">密码</string>
     <string name="edit_login">登录</string>
     <string name="edit_regist">没有账户？创建一个？</string>

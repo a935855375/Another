@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.fc.fan.another.utils.ConstantUtil;
 import com.fc.fan.another.utils.PreferenceUtil;
 import com.trello.rxlifecycle2.components.RxActivity;
 
@@ -28,7 +27,7 @@ public class SplashActivity extends RxActivity {
     }
 
     private void Goto() {
-        boolean isLogin = PreferenceUtil.getBoolean(ConstantUtil.KEY, false);
+        boolean isLogin = PreferenceUtil.getBoolean("isLogin", false);
         if (isLogin)
             startActivity(new Intent(this, MainActivity.class));
         else

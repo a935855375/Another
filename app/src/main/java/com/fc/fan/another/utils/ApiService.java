@@ -1,41 +1,29 @@
 package com.fc.fan.another.utils;
 
+import com.fc.fan.another.module.common.bean.LoginStatusBean;
 import com.fc.fan.another.module.course.ResourceBean;
 import com.fc.fan.another.module.explore.ExplorePostBean;
 import com.fc.fan.another.module.explore.ExploreRegionBean;
 import com.fc.fan.another.module.explore.PostCommentBean;
+import com.fc.fan.another.module.explore.ResposeBean;
 import com.fc.fan.another.module.region.RegionBean;
 import com.fc.fan.another.module.region.RegionItemBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-/**
- * Created by fan on 7/10/17.
- */
-
 public interface ApiService {
-    @GET("/haha")
-    Observable<ResponseBody> get();
-
-    @POST("/haha")
-    Observable<ResponseBody> post(@Body RequestBody body);
 
     @FormUrlEncoded
     @POST("/Fc/login/test2")
     Observable<ResponseBody> test(@Field("username") String username, @Field("password") String password);
-
-    @POST("/Fc/videofile_scanFileByCourse.action")
-    Observable<ResponseBody> test();
 
     @GET("ff/types/types_goCourseIndex.action")
     Observable<List<RegionBean>> getRegion();
@@ -56,8 +44,22 @@ public interface ApiService {
     Observable<PostCommentBean> getPostComment(@Query("page") int page, @Query("qid") int qid);
 
     @FormUrlEncoded
-    @POST("/Fc/login/test2")
-    Observable<PostCommentBean> postWriteDown(@Field("title") String title, @Field("content") String content);
+    @POST("ff/question/question_addQuestion")
+    Observable<ResposeBean> postWritePostDown(@Field("title") String title,
+                                              @Field("content") String content,
+                                              @Field("uid") int uid,
+                                              @Field("style") int style);
 
-    //Observable<PostCommentBean> postComment(@Field("user") );
+    @FormUrlEncoded
+    @POST("ff/answer/answer_addAnswerToQuestion")
+    Observable<ResposeBean> postWriteCommentDown(@Field("content") String content,
+                                                 @Field("uid") int uid,
+                                                 @Field("qid") int aid);
+
+    @FormUrlEncoded
+    @POST("ff/user/user_login")
+    Observable<LoginStatusBean> login(@Field("username") String mail, @Field("password") String password);
+
+
+    Observable<ResposeBean> register(@Field("mail") String mail, @Field("password") String password);
 }

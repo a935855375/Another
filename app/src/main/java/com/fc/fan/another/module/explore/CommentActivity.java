@@ -67,8 +67,16 @@ public class CommentActivity extends RxBaseActivity {
     public void initViews(Bundle savedInstanceState) {
         qid = getIntent().getIntExtra("qid", 0);
         list = new ArrayList<>();
-
         initRecyclerView();
+
+        swipeRefreshLayout.setOnRefreshListener(this::refreshData);
+
+        send.setOnClickListener(view -> {
+            if (valid()) {
+                String content = editText.getText().toString();
+                postData(content, 1, qid);
+            }
+        });
     }
 
 
@@ -101,8 +109,35 @@ public class CommentActivity extends RxBaseActivity {
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+    }
 
-        swipeRefreshLayout.setOnRefreshListener(this::refreshData);
+    private void postData(String content, int uid, int qid) {
+        HttpUtils.getInstance()
+                .create(ApiService.class, PreferenceUtil.baseUrl)
+                .postWriteCommentDown(content, uid, qid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(x -> {
+                    if (x.getMsg() == 1) {
+                        Toast.makeText(this, "评论成功", Toast.LENGTH_SHORT).show();
+
+                        refreshData();
+                    } else
+                        Toast.makeText(this, "评论成功", Toast.LENGTH_SHORT).show();
+                }, throwable -> {
+                    Toast.makeText(this, "网络错误", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, throwable.getMessage());
+                });
+    }
+
+    private boolean valid() {
+        boolean flag = true;
+        String content = editText.getText().toString();
+        if (content.isEmpty()) {
+            flag = false;
+            Toast.makeText(this, "评论不能为空", Toast.LENGTH_SHORT).show();
+        }
+        return flag;
     }
 
     @Override
@@ -145,7 +180,7 @@ public class CommentActivity extends RxBaseActivity {
                     updateData();
                 }, throwable -> {
                     swipeRefreshLayout.setRefreshing(false);
-                    Toast.makeText(this, "获取数据出错了", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "该问题暂时无人评论", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, throwable.getMessage());
                 });
     }
