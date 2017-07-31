@@ -18,9 +18,14 @@ import com.fc.fan.another.utils.decoration.CustomItemDecoration;
 import com.fc.fan.another.utils.HttpUtils;
 import com.fc.fan.another.utils.PreferenceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.fc.fan.another.module.region.RegionItemBean.*;
 
 public class RegionItemActivity extends RxBaseActivity {
     public static final String TAG = RegionItemActivity.class.getSimpleName();
@@ -39,7 +44,9 @@ public class RegionItemActivity extends RxBaseActivity {
 
     private boolean isEnd;
 
-    CourseItemAdapter adapter;
+    private CourseItemAdapter adapter;
+
+    private List<ListBean> list;
 
     @Override
     public int getLayoutId() {
@@ -48,10 +55,11 @@ public class RegionItemActivity extends RxBaseActivity {
 
     @Override
     public void initViews(Bundle savedInstanceState) {
+        list = new ArrayList<>();
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
         tid = intent.getIntExtra("tid", 0);
-        adapter = new CourseItemAdapter();
+        adapter = new CourseItemAdapter(list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -70,7 +78,7 @@ public class RegionItemActivity extends RxBaseActivity {
                         if (isEnd)
                             Toast.makeText(getBaseContext(), "已经加载到底了", Toast.LENGTH_SHORT).show();
                         else
-                            loadMore();
+                            getMoreData();
                     }
                 }
                 super.onScrollStateChanged(recyclerView, newState);
@@ -92,29 +100,37 @@ public class RegionItemActivity extends RxBaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(title);
         }
-        getData();
+        getMoreData();
     }
 
-    private void getData() {
+    private void requestData(int tid, int page) {
         HttpUtils.getInstance()
                 .create(ApiService.class, PreferenceUtil.baseUrl)
                 .getRegionItem(tid, page)
+                .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::finishLoad, throwable -> {
-                });
+                .subscribe(data -> {
+                    if (data.getList().size() < data.getLimit())
+                        isEnd = true;
+
+                    list.addAll(data.getList());
+                    updateData();
+                }, throwable -> Toast.makeText(this, "该分区暂时没有视频", Toast.LENGTH_SHORT).show());
     }
 
-    private void finishLoad(RegionItemBean regionItemBean) {
-        if (regionItemBean.getList().size() < regionItemBean.getLimit())
-            isEnd = true;
-        adapter.setRegionItemBean(regionItemBean);
+    private void getMoreData() {
+        if (!isEnd) {
+            requestData(tid, page);
+            page++;
+        } else
+            Toast.makeText(this, "已经滑到底啦", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateData() {
         adapter.notifyDataSetChanged();
     }
 
-    private void loadMore() {
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -6,6 +6,9 @@ import com.fc.fan.another.module.explore.ExplorePostBean;
 import com.fc.fan.another.module.explore.ExploreRegionBean;
 import com.fc.fan.another.module.explore.PostCommentBean;
 import com.fc.fan.another.module.explore.ResposeBean;
+import com.fc.fan.another.module.mine.bean.AnswerBean;
+import com.fc.fan.another.module.mine.bean.DirectBean;
+import com.fc.fan.another.module.mine.bean.HistoryBean;
 import com.fc.fan.another.module.region.RegionBean;
 import com.fc.fan.another.module.region.RegionItemBean;
 
@@ -60,6 +63,19 @@ public interface ApiService {
     @POST("ff/user/user_login")
     Observable<LoginStatusBean> login(@Field("username") String mail, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("ff/user/user_login")
+    Observable<ResposeBean> register(@Field("username") String username, @Field("mail") String mail, @Field("password") String password);
 
-    Observable<ResposeBean> register(@Field("mail") String mail, @Field("password") String password);
+    @GET("ff/ajax/courseuser_getCoursePageByUid")
+    Observable<HistoryBean> getHistory(@Query("page") int page, @Query("uid") int uid);
+
+    @GET("ff/ajax/question_getQuestionPageByUid")
+    Observable<ExplorePostBean> getQuestion(@Query("page") int page, @Query("uid") int uid);
+
+    @GET("ff/ajax/answer_getAnswerByUid")
+    Observable<AnswerBean> getAnswer(@Query("page") int page, @Query("uid") int uid);
+
+    @GET("ff/ajax/userplan_getPlanPageByUid")
+    Observable<DirectBean> getMyDirection(@Query("page") int page, @Query("uid") int uid);
 }

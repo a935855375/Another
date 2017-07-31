@@ -41,8 +41,17 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/VideoTheme" />
         <activity android:name=".module.explore.CommentActivity" />
-        <activity android:name=".module.explore.PostContentActivity" />
         <activity android:name=".module.explore.PostContentSideActivity" />
+        <activity android:name=".module.mine.HistoryActivity" />
+        <activity android:name=".module.mine.QuestionActivity" />
+        <activity
+            android:name=".module.mine.AnswerActivity"
+            android:theme="@style/GrayTheme" />
+
+        <activity android:name=".module.mine.SettingActivity" />
+
+        <activity android:name=".module.mine.DirectionActivity" />
+
     </application>
 
 </manifest>

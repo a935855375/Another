@@ -45,8 +45,6 @@ public class ChapterFragment extends RxLazyFragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //recyclerView.addItemDecoration(new SpacesItemVerticalDecoration(50));
-        //recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
     }
 
     public void setResource(List<ResourceBean.ResourceListBean> videoList) {

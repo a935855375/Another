@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
@@ -30,6 +31,8 @@ public class MainActivity extends RxBaseActivity {
 
     @BindView(R.id.search_view)
     MaterialSearchView mSearchView;
+
+    private long exitTime;
 
     FragmentAdapter pagerAdapter;
 
@@ -113,5 +116,15 @@ public class MainActivity extends RxBaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
     }
 }

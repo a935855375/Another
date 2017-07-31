@@ -15,7 +15,7 @@ import com.fc.fan.another.module.course.CourseActivity;
 import com.fc.fan.another.module.region.RegionItemBean;
 import com.fc.fan.another.utils.PreferenceUtil;
 
-import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,43 +24,27 @@ public class CourseItemAdapter extends RecyclerView.Adapter {
     public static String TAG = CourseItemAdapter.class.getSimpleName();
 
     private Context mContext;
-    private HashMap<Integer, RegionItemBean.ListBean> map;
 
-    public CourseItemAdapter() {
-        map = new HashMap<>();
-    }
+    private List<RegionItemBean.ListBean> list;
 
-    public void setRegionItemBean(RegionItemBean regionItemBean) {
-        int q = 0;
-        for (RegionItemBean.ListBean listBean : regionItemBean.getList()) {
-            map.put(q, listBean);
-            q++;
-        }
+    public CourseItemAdapter(List<RegionItemBean.ListBean> list) {
+        this.list = list;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.region_content_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        view.setOnClickListener(view1 -> {
-            RegionItemBean.ListBean bean = map.get(holder.getAdapterPosition());
-            Intent intent = new Intent(mContext, CourseActivity.class);
-            intent.putExtra("Title", bean.getName());
-            intent.putExtra("Cid", bean.getCid());
-            mContext.startActivity(intent);
-        });
-        return holder;
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.region_content_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).bind(map.get(position));
+        ((ViewHolder) holder).bind(list.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return map.size();
+        return list.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,6 +70,12 @@ public class CourseItemAdapter extends RecyclerView.Adapter {
             title.setText(listBean.getName());
             describe.setText(listBean.getSummary());
             clickCount.setText(listBean.getPeople() + "人学习");
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(mContext, CourseActivity.class);
+                intent.putExtra("Title", listBean.getName());
+                intent.putExtra("Cid", listBean.getCid());
+                mContext.startActivity(intent);
+            });
         }
     }
 }

@@ -80,6 +80,7 @@ public class MainFragment extends RxLazyFragment {
     }
 
     private void initWebViewClient() {
+
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
@@ -90,5 +91,11 @@ public class MainFragment extends RxLazyFragment {
                     Log.e(TAG, error.getDescription().toString());
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        mWebView.destroy();
+        super.onDestroyView();
     }
 }

@@ -50,6 +50,7 @@ public class ExploreFragment extends RxLazyFragment {
         HttpUtils.getInstance()
                 .create(ApiService.class, PreferenceUtil.baseUrl)
                 .getExploreRegion()
+                .compose(bindToLifecycle())
                 .map(ExploreRegionBean::getList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

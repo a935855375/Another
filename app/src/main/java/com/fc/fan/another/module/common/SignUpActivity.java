@@ -3,7 +3,6 @@ package com.fc.fan.another.module.common;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -11,18 +10,18 @@ import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
 import com.fc.fan.another.utils.ApiService;
 import com.fc.fan.another.utils.HttpUtils;
+import com.fc.fan.another.utils.PreferenceUtil;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by fan on 7/12/17.
- */
-
+@SuppressWarnings("deprecation")
 public class SignUpActivity extends RxBaseActivity {
     public static final String TAG = SignUpActivity.class.getSimpleName();
 
     @BindView(R.id.btn_sign_up)
-    AppCompatButton _signupButton;
+    AppCompatButton _signUpButton;
 
     @BindView(R.id.input_email)
     EditText _emailText;
@@ -43,10 +42,8 @@ public class SignUpActivity extends RxBaseActivity {
 
     @Override
     public void initViews(Bundle savedInstanceState) {
-        _signupButton.setOnClickListener(view -> signUp());
-        _loginLink.setOnClickListener(view -> {
-            Log.e(TAG, "hah");
-        });
+        _signUpButton.setOnClickListener(view -> signUp());
+        _loginLink.setOnClickListener(view -> finish());
     }
 
     private void signUp() {
@@ -62,6 +59,13 @@ public class SignUpActivity extends RxBaseActivity {
         progressDialog.setMessage("请稍后...");
         progressDialog.show();
 
+        HttpUtils.getInstance()
+                .create(ApiService.class, PreferenceUtil.baseUrl)
+                .register(name, email, password)
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public boolean validate() {

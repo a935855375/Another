@@ -74,18 +74,19 @@ public class LoginActivity extends RxBaseActivity {
         HttpUtils.getInstance()
                 .create(ApiService.class, PreferenceUtil.baseUrl)
                 .login(email, password)
+                .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handResult, throwable -> {
                     Log.e(TAG, throwable.getMessage());
-                    progressDialog.hide();
+                    progressDialog.dismiss();
                     _loginButton.setEnabled(true);
                     Toast.makeText(this, "登录失败，可能是因为没有网络", Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void handResult(LoginStatusBean bean) {
-        progressDialog.hide();
+        progressDialog.dismiss();
         if (bean.getMsg() == 0) {
             Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
             _loginButton.setEnabled(true);
@@ -94,6 +95,7 @@ public class LoginActivity extends RxBaseActivity {
             Log.e(TAG, (bean.getUser() == null) + "");
             PreferenceUtil.putString("user", gson.toJson(bean.getUser()));
             PreferenceUtil.putBoolean("isLogin", true);
+            progressDialog.cancel();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

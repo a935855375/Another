@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.fc.fan.another.R;
 import com.fc.fan.another.module.explore.ExploreFragment;
-import com.fc.fan.another.module.main.MainFragment;
+import com.fc.fan.another.module.main.NewMainFragment;
 import com.fc.fan.another.module.mine.MineFragment;
 import com.fc.fan.another.module.region.RegionFragment;
 
@@ -31,7 +31,7 @@ class FragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return MainFragment.newInstance();
+                return NewMainFragment.newInstance();
             case 1:
                 return RegionFragment.newInstance();
             case 2:

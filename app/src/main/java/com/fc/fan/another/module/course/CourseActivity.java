@@ -83,7 +83,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public void notifyChanged(ResourceBean.ResourceListBean bean) {
-        detailFragment.setCotent(bean.getSummary());
+        detailFragment.setContent(bean.getSummary());
         list.clear();
         VideoijkBean m = new VideoijkBean();
         m.setStream("原画");
@@ -116,7 +116,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     private void initOfficeView(List<ResourceBean.OfficListBean> officeList) {
-
+        detailFragment.setResource(officeList);
     }
 
     private void initPlayer() {

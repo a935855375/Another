@@ -148,9 +148,8 @@ public class ExploreActivity extends RxBaseActivity {
 
         HttpUtils.getInstance().create(ApiService.class, PreferenceUtil.baseUrl)
                 .getExplorePost(page, type)
+                .compose(bindToLifecycle())
                 .doOnNext(x -> {
-                    if (x.getList().size() == 0 && list.size() == 0)
-                        Toast.makeText(this, "该板块还没有人发帖", Toast.LENGTH_SHORT).show();
                     if (x.getList().size() < x.getLimit())
                         isEnd = true;
                 })
@@ -158,6 +157,9 @@ public class ExploreActivity extends RxBaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
+                    if (data.size() == 0 && list.size() == 0)
+                        Toast.makeText(this, "该板块还没有人发帖", Toast.LENGTH_SHORT).show();
+
                     if (isClear)
                         list.clear();
 

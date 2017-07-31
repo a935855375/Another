@@ -5,9 +5,6 @@ import android.preference.PreferenceManager;
 
 import com.fc.fan.another.ThisApp;
 
-/**
- * Created by fan on 7/12/17.
- */
 
 public class PreferenceUtil {
     public static final String baseUrl = "http://10.0.0.17:8080/";
@@ -25,5 +22,9 @@ public class PreferenceUtil {
 
     public static void putString(String key, String value) {
         sharedPreferences.edit().putString(key, value).apply();
+    }
+
+    public static String getString(String key, String value) {
+        return sharedPreferences.getString(key, value);
     }
 }

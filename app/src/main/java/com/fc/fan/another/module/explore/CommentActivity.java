@@ -115,15 +115,16 @@ public class CommentActivity extends RxBaseActivity {
         HttpUtils.getInstance()
                 .create(ApiService.class, PreferenceUtil.baseUrl)
                 .postWriteCommentDown(content, uid, qid)
+                .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(x -> {
                     if (x.getMsg() == 1) {
                         Toast.makeText(this, "评论成功", Toast.LENGTH_SHORT).show();
-
+                        editText.setText("");
                         refreshData();
                     } else
-                        Toast.makeText(this, "评论成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "评论失败", Toast.LENGTH_SHORT).show();
                 }, throwable -> {
                     Toast.makeText(this, "网络错误", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, throwable.getMessage());
@@ -160,9 +161,8 @@ public class CommentActivity extends RxBaseActivity {
         HttpUtils.getInstance()
                 .create(ApiService.class, PreferenceUtil.baseUrl)
                 .getPostComment(page, type)
+                .compose(bindToLifecycle())
                 .doOnNext(x -> {
-                    if (x.getList().size() == 0 && list.size() == 0)
-                        Toast.makeText(this, "该问题暂时无人评论", Toast.LENGTH_SHORT).show();
                     if (x.getList().size() < x.getLimit())
                         isEnd = true;
                 })
@@ -170,6 +170,9 @@ public class CommentActivity extends RxBaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
+                    if (data.size() == 0 && list.size() == 0)
+                        Toast.makeText(this, "该问题暂时无人评论", Toast.LENGTH_SHORT).show();
+
                     if (isClear)
                         list.clear();
 
@@ -180,7 +183,7 @@ public class CommentActivity extends RxBaseActivity {
                     updateData();
                 }, throwable -> {
                     swipeRefreshLayout.setRefreshing(false);
-                    Toast.makeText(this, "该问题暂时无人评论", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "是不是网络出现了问题", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, throwable.getMessage());
                 });
     }

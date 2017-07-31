@@ -67,6 +67,7 @@ public class WriteDownActivity extends RxBaseActivity {
         HttpUtils.getInstance()
                 .create(ApiService.class, PreferenceUtil.baseUrl)
                 .postWritePostDown(title, content, uid, type)
+                .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(x -> {
