@@ -124,6 +124,7 @@ public class ExploreActivity extends RxBaseActivity {
             fab.postDelayed((() -> fab.close(true)), 300);
         });
 
+
         swipeRefreshLayout.setOnRefreshListener(this::refreshData);
     }
 

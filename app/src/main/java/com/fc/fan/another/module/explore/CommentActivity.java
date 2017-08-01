@@ -1,6 +1,7 @@
 package com.fc.fan.another.module.explore;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,8 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fc.fan.another.R;
@@ -42,6 +46,9 @@ public class CommentActivity extends RxBaseActivity {
     @BindView(R.id.comment_send)
     ImageView send;
 
+    @BindView(R.id.cancel_reply)
+    TextView cancel_reply;
+
     @BindView(R.id.comment_edit)
     EditText editText;
 
@@ -67,14 +74,29 @@ public class CommentActivity extends RxBaseActivity {
     public void initViews(Bundle savedInstanceState) {
         qid = getIntent().getIntExtra("qid", 0);
         list = new ArrayList<>();
+
+        cancel_reply.setVisibility(View.GONE);
+
+        cancel_reply.setOnClickListener(view -> {
+            editText.setHint("添加评论");
+            cancel_reply.setVisibility(View.GONE);
+        });
+
         initRecyclerView();
 
         swipeRefreshLayout.setOnRefreshListener(this::refreshData);
 
+
         send.setOnClickListener(view -> {
             if (valid()) {
-                String content = editText.getText().toString();
-                postData(content, 1, qid);
+                String hint = editText.getHint().toString();
+                if (hint.startsWith("添加评论")) {
+                    String content = editText.getText().toString();
+                    postData(content, 1, qid);
+                } else {
+                    String content = hint + editText.getText().toString();
+                    postData(content, 1, qid);
+                }
             }
         });
     }
@@ -120,11 +142,27 @@ public class CommentActivity extends RxBaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(x -> {
                     if (x.getMsg() == 1) {
-                        Toast.makeText(this, "评论成功", Toast.LENGTH_SHORT).show();
+                        editText.clearFocus();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                         editText.setText("");
+                        if (editText.getHint().toString().startsWith("回复")) {
+                            editText.setHint("添加评论");
+                            Snackbar.make(editText, "回复成功", Snackbar.LENGTH_SHORT)
+                                    .setAction("查看", view -> {
+
+                                    }).show();
+                            cancel_reply.setVisibility(View.GONE);
+                        } else {
+                            Snackbar.make(editText, "评论成功", Snackbar.LENGTH_SHORT)
+                                    .setAction("查看", view -> {
+
+                                    }).show();
+                        }
                         refreshData();
                     } else
-                        Toast.makeText(this, "评论失败", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(editText, "评论失败", Snackbar.LENGTH_SHORT)
+                                .show();
                 }, throwable -> {
                     Toast.makeText(this, "网络错误", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, throwable.getMessage());
@@ -217,5 +255,13 @@ public class CommentActivity extends RxBaseActivity {
         if (item.getItemId() == android.R.id.home)
             finish();
         return true;
+    }
+
+    public EditText getEditText() {
+        return editText;
+    }
+
+    public TextView getCancelButton() {
+        return cancel_reply;
     }
 }

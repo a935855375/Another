@@ -7,10 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fc.fan.another.R;
+import com.fc.fan.another.module.explore.CommentActivity;
 import com.fc.fan.another.module.explore.PostCommentBean;
 import com.fc.fan.another.utils.PreferenceUtil;
 
@@ -84,7 +88,14 @@ public class CommentAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(v -> {
                 View view = LayoutInflater.from(mContext).inflate(R.layout.comment_pop_menu, null);
                 final BottomSheetDialog dialog = new BottomSheetDialog(mContext);
-                view.findViewById(R.id.comment_copy).setOnClickListener(vv -> dialog.dismiss());
+                EditText editText = ((CommentActivity) mContext).getEditText();
+                view.findViewById(R.id.comment_reply).setOnClickListener(vv -> {
+                    ((CommentActivity) mContext).getCancelButton().setVisibility(View.VISIBLE);
+                    editText.setHint("回复 " + bean.getUser().getUsername() + " 的评论：");
+                    dialog.cancel();
+                    editText.requestFocus();
+                    ((CommentActivity) mContext).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                });
                 dialog.setContentView(view);
                 dialog.show();
             });

@@ -1,6 +1,7 @@
 package com.fc.fan.another.adpater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fc.fan.another.R;
+import com.fc.fan.another.module.entry.PlanActivity;
 import com.fc.fan.another.module.mine.bean.DirectBean;
 import com.fc.fan.another.utils.PreferenceUtil;
 
@@ -77,6 +79,12 @@ public class DirectItemAdapter extends RecyclerView.Adapter {
             title.setText(bean.getName());
             describe.setText(bean.getSummary());
             click_count.setText(bean.getTime().getYear() + "-" + bean.getTime().getMonth() + "-" + bean.getTime().getDay());
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(mContext, PlanActivity.class);
+                intent.putExtra("pid", bean.getPid());
+                intent.putExtra("title", bean.getTitle());
+                mContext.startActivity(intent);
+            });
         }
     }
 }

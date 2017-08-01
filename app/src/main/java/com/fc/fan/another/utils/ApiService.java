@@ -2,6 +2,7 @@ package com.fc.fan.another.utils;
 
 import com.fc.fan.another.module.common.bean.LoginStatusBean;
 import com.fc.fan.another.module.course.ResourceBean;
+import com.fc.fan.another.module.entry.PlanBean;
 import com.fc.fan.another.module.explore.ExplorePostBean;
 import com.fc.fan.another.module.explore.ExploreRegionBean;
 import com.fc.fan.another.module.explore.PostCommentBean;
@@ -78,4 +79,7 @@ public interface ApiService {
 
     @GET("ff/ajax/userplan_getPlanPageByUid")
     Observable<DirectBean> getMyDirection(@Query("page") int page, @Query("uid") int uid);
+
+    @GET("ff/planitem/planitem_goPlanItemByPid")
+    Observable<List<PlanBean>> getDirectionCourse(@Query("pid") int pid);
 }

@@ -65,7 +65,7 @@
             android:src="@drawable/make_post"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_colorPressed="@color/colorAccentDark"
-            app:fab_label="发帖"
+            app:fab_label="提问"
             app:fab_size="mini" />
 
 
