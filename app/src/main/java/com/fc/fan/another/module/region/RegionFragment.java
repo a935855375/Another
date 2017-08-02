@@ -1,6 +1,7 @@
 package com.fc.fan.another.module.region;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,6 +32,9 @@ public class RegionFragment extends RxLazyFragment {
     @BindView(R.id.recycle)
     RecyclerView mRecycleView;
 
+    @BindView(R.id.region_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     public static RegionFragment newInstance() {
         return new RegionFragment();
     }
@@ -42,7 +46,12 @@ public class RegionFragment extends RxLazyFragment {
 
     @Override
     public void finishCreateView(Bundle state) {
+        swipeRefreshLayout.setOnRefreshListener(this::refresh);
         initRecycleView();
+    }
+
+    private void refresh() {
+        load(true);
     }
 
     private void initRecycleView() {
@@ -65,25 +74,27 @@ public class RegionFragment extends RxLazyFragment {
         mRecycleView.setLayoutManager(mLayoutManager);
         mRecycleView.setAdapter(mAdapter);
 
-        load();
+        load(false);
     }
 
-    private void load() {
+    private void load(boolean isClear) {
+        if (isClear)
+            swipeRefreshLayout.setRefreshing(true);
+
         HttpUtils.getInstance()
                 .create(ApiService.class, PreferenceUtil.baseUrl)
                 .getRegion()
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateUI, throwable -> {
+                .subscribe(data -> {
+                    swipeRefreshLayout.setRefreshing(false);
+                    mAdapter.setRegionBeans(data);
+                    mAdapter.notifyDataSetChanged();
+                }, throwable -> {
+                    swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(getContext(), "获取分类失败..", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, throwable.getMessage());
                 });
     }
-
-    private void updateUI(List<RegionBean> regionBeanList) {
-        mAdapter.setRegionBeans(regionBeanList);
-        mAdapter.notifyDataSetChanged();
-    }
-
 }

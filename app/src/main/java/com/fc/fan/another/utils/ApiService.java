@@ -7,6 +7,7 @@ import com.fc.fan.another.module.explore.ExplorePostBean;
 import com.fc.fan.another.module.explore.ExploreRegionBean;
 import com.fc.fan.another.module.explore.PostCommentBean;
 import com.fc.fan.another.module.explore.ResposeBean;
+import com.fc.fan.another.module.main.MainBean;
 import com.fc.fan.another.module.mine.bean.AnswerBean;
 import com.fc.fan.another.module.mine.bean.DirectBean;
 import com.fc.fan.another.module.mine.bean.HistoryBean;
@@ -82,4 +83,7 @@ public interface ApiService {
 
     @GET("ff/planitem/planitem_goPlanItemByPid")
     Observable<List<PlanBean>> getDirectionCourse(@Query("pid") int pid);
+
+    @GET("ff/direction/direction_Androidindex")
+    Observable<MainBean> getMainBean();
 }

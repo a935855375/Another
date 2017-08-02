@@ -49,10 +49,9 @@
             android:theme="@style/GrayTheme" />
 
         <activity android:name=".module.mine.SettingActivity" />
-
         <activity android:name=".module.mine.DirectionActivity" />
-
         <activity android:name=".module.entry.PlanActivity" />
+        <activity android:name=".module.entry.NotifyActivity" />
 
     </application>
 

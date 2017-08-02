@@ -1,7 +1,9 @@
 package com.fc.fan.another.module.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
+import com.fc.fan.another.module.common.LoginActivity;
 import com.fc.fan.another.module.common.bean.LoginStatusBean;
 import com.fc.fan.another.utils.PreferenceUtil;
 import com.google.gson.Gson;
@@ -37,6 +40,9 @@ public class SettingActivity extends RxBaseActivity {
     @BindView(R.id.setting_username)
     TextView userName;
 
+    @BindView(R.id.exit)
+    TextView exit;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_setting;
@@ -44,6 +50,11 @@ public class SettingActivity extends RxBaseActivity {
 
     @Override
     public void initViews(Bundle savedInstanceState) {
+        exit.setOnClickListener(view -> {
+            PreferenceUtil.putBoolean("isLogin", false);
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        });
         auto_play.setChecked(true);
         Gson gson = new Gson();
         LoginStatusBean.UserBean bean = gson.fromJson(PreferenceUtil

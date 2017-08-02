@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.fc.fan.another.R;
 import com.fc.fan.another.base.RxBaseActivity;
-import com.fc.fan.another.module.explore.PostContentActivity;
+import com.fc.fan.another.module.entry.NotifyActivity;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.BindView;
@@ -111,7 +111,7 @@ public class MainActivity extends RxBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.message:
-                Intent intent = new Intent(this, PostContentActivity.class);
+                Intent intent = new Intent(this, NotifyActivity.class);
                 startActivity(intent);
                 break;
         }
