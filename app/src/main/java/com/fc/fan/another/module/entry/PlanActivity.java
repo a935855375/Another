@@ -1,5 +1,6 @@
 package com.fc.fan.another.module.entry;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -21,6 +22,7 @@ import com.fc.fan.another.utils.decoration.CustomItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -81,7 +83,6 @@ public class PlanActivity extends RxBaseActivity {
             actionBar.setTitle(title);
         }
 
-        Log.e(TAG, pid + "");
         requestData(pid, false);
     }
 
@@ -93,8 +94,14 @@ public class PlanActivity extends RxBaseActivity {
                 .create(ApiService.class, PreferenceUtil.baseUrl)
                 .getDirectionCourse(pid)
                 .compose(bindToLifecycle())
-                .map(x -> x.get(0))
-                .map(PlanBean::getCourses)
+                .map(x -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        return x.stream().map(bean -> bean.getCourses().get(0)).collect(Collectors.toList());
+                    } else {
+                        list.addAll(x.stream().map(bean -> bean.getCourses().get(0)).collect(Collectors.toList()));
+                        return list;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
