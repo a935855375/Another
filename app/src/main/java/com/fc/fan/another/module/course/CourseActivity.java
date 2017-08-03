@@ -164,7 +164,6 @@ public class CourseActivity extends AppCompatActivity {
         if (player != null) {
             player.onPause();
         }
-        /**demo的内容，恢复系统其它媒体的状态*/
         MediaUtils.muteAudioFocus(mContext, true);
     }
 
@@ -174,9 +173,7 @@ public class CourseActivity extends AppCompatActivity {
         if (player != null) {
             player.onResume();
         }
-        /**demo的内容，暂停系统其它媒体的状态*/
         MediaUtils.muteAudioFocus(mContext, false);
-        /**demo的内容，激活设备常亮状态*/
     }
 
     @Override
@@ -201,6 +198,5 @@ public class CourseActivity extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
-        /**demo的内容，恢复设备亮度状态*/
     }
 }
