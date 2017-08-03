@@ -1,14 +1,18 @@
 package com.fc.fan.another.adpater;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fc.fan.another.R;
 import com.fc.fan.another.module.course.ResourceBean;
+import com.fc.fan.another.utils.PreferenceUtil;
 
 import java.util.List;
 
@@ -53,6 +57,9 @@ public class CourseDetailAdapter extends RecyclerView.Adapter {
         @BindView(R.id.office_item_text)
         TextView textView;
 
+        @BindView(R.id.office_download)
+        ImageView download;
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -60,6 +67,13 @@ public class CourseDetailAdapter extends RecyclerView.Adapter {
 
         void bind(ResourceBean.OfficListBean bean) {
             textView.setText(bean.getName());
+            download.setOnClickListener(view -> {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse(PreferenceUtil.baseUrl + "ff/otherFile/" + bean.getFilePath()));
+                mContext.startActivity(intent);
+            });
         }
     }
 }

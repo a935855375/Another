@@ -1309,6 +1309,15 @@ public class PlayerView {
         return this;
     }
 
+    public PlayerView hideSeekBar() {
+        seekBar.setVisibility(View.GONE);
+        query.id(R.id.app_video_currentTime).visibility(View.GONE);
+        query.id(R.id.app_video_endTime).visibility(View.GONE);
+        query.id(R.id.ijk_iv_rotation).visibility(View.GONE);
+        query.id(R.id.app_video_divider).visibility(View.GONE);
+        return this;
+    }
+
     /**
      * 是否隐藏topbar，true为隐藏，false为不隐藏，但不一定是显示
      */

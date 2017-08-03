@@ -52,6 +52,11 @@
         <activity android:name=".module.mine.DirectionActivity" />
         <activity android:name=".module.entry.PlanActivity" />
         <activity android:name=".module.entry.NotifyActivity" />
+        <activity android:name=".module.common.SignUpActivity" />
+        <activity
+            android:name=".module.live.LiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/VideoTheme" />
 
     </application>
 
